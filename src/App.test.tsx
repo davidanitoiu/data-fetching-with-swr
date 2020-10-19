@@ -1,9 +1,17 @@
+import { waitFor } from '@testing-library/dom';
+import { act, render } from '@testing-library/react';
 import React from 'react';
-import { render } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+jest.mock('./utils/utils');
+
+describe('App', () => {
+  it('renders table correctly', async () => {
+    const { getByRole } = render(<App />);
+
+    await act(
+      async () => await waitFor(
+        () => expect(getByRole('table')).toBeInTheDocument()
+      ));
+  });
+})
